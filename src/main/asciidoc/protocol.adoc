@@ -144,7 +144,7 @@ Ces classes devront donc chacune définir une méthode compare prenant comme arg
 [bibliography]
 == Références
 
-* Deitel, H. M., & Deitel, P. J. (2002). _JAVA Comment programmer (4th ed.)_. Les éditions Reynald Goulet INC.
+* Deitel, H. M., & Deitel, P. J. (2002). _Java : comment programmer (4th ed.)_. Les éditions Reynald Goulet INC.
 * Deitel, P. J., & Deitel, H. M. (2007). _Java: how to program (7th ed.)_. Les éditions Reynald Goulet INC.
 * Evans, E. (2003). _Domain-driven design: tackling complexity in the heart of software (1st ed.)_. Addison-Wesley Professional.
 * Manneback, P., & Frémal, S. (2014-2015). _Travaux pratiques de Méthodologie et Langage de Programmation_. UMons.
