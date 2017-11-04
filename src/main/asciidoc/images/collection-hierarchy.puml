@@ -1,0 +1,59 @@
+@startuml
+hide empty members
+
+interface Iterable<E> {
+    +iterator() : Iterator<E>
+}
+interface Collection<E> {
+    +add(element: E) : boolean
+    +remove(element : E) : boolean
+    +contains(element : E) : boolean
+    +clear() : void
+    +size() : int
+}
+
+note right of Collection : Contient un nombre\nfini d'éléments
+
+interface Set<E>
+
+note left of Set : Ne contient\naucun doublon
+
+interface List<E> {
+    +get(index : int) : E
+    +toArray<T>(T[] array) : T[]
+}
+
+note right of List : Conserve l'ordre\ndes éléments
+
+interface SortedSet<E>
+
+note left of SortedSet : Tous ses éléments\nsont triés
+
+class HashSet<E>
+class LinkedHashSet<E>
+class TreeSet<E>
+class ArrayList<E>
+class LinkedList<E>
+interface Queue<E>
+interface Deque<E> {
+    +addFirst(element : E) : void
+    +addLast(element : E) : void
+    +getFirst() : E
+    +getLast() : E
+    +removeFirst() : E
+    +removeLast() : E
+}
+
+Iterable <|-- Collection
+Collection <|-- Set
+Collection <|-- List
+Set <|-- SortedSet
+Set <|-- HashSet
+HashSet <|-- LinkedHashSet
+SortedSet <|-- TreeSet
+List <|-- ArrayList
+List <|-- LinkedList
+Collection <|-- Queue
+Queue <|-- Deque
+Deque <|-- LinkedList
+@enduml

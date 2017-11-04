@@ -1,0 +1,26 @@
+@startuml
+hide empty members
+
+interface Map<K, V> {
+    +put(key : K, value : V) : V
+    +get(key : K) : V
+    +remove(key : k) : V
+    +keySet() : Set<K>
+    +values() : Collection<V>
+    +entrySet() : Set<Map.Entry<K, V>>
+}
+class HashMap<K, V>
+class LinkedHashMap<K, V>
+
+note left of LinkedHashMap : Éléments ordonnés
+
+interface SortedMap<K, V>
+class TreeMap<K, V>
+
+note right of TreeMap : Éléments triés
+
+Map <|-- SortedMap
+Map <|-- HashMap
+HashMap <|-- LinkedHashMap
+SortedMap <|-- TreeMap
+@enduml
