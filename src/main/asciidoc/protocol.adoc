@@ -24,42 +24,70 @@ Le package `java.util` nous fournit deux hiérarchies particulièrement importan
 La première permet de grouper des éléments relativement homogènes.
 La seconde permet de créer des dictionnaires, c'est-à-dire un ensemble de valeurs auxquelles nous accédons à partir d'une clé.
 
+[[collection-hierarchy]]
 .Interfaces et classes principales de la hiérarchie de `Collection`
 image::collection-hierarchy.svg[scaledwidth="90%", align="center"]
 
+[[map-hierarchy]]
 .Interfaces et classes principales de la hiérarchie de `Map`
 image::map-hierarchy.svg[scaledwidth="80%", align="center"]
 
-.Méthodes et interfaces utilisées par `Collection` et `Map`
+Chaque interface apporte ses propres fonctionnalités.
+Chaque implémentation possède ses spécificités et ses propres contraintes.
+En fonction de votre usage, vous choisirez l'interface appropriée.
+Vous choisirez ensuite une implémentation de cette interface pour optimiser vos performances.
+
+TIP: Je ne passerai pas en revue les spécifités des interfaces et classes du framework.
+Ce serait bien trop long.
+Je vous renvoie vers https://docs.oracle.com/javase/8/docs/technotes/guides/collections/reference.html[l'aperçu du framework collection], https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html[sa présentation] et https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html[la Javadoc du package `java.util`].
+Vous trouverez notamment des indications sur les performances des différentes méthodes au début de la page de la Javadoc des classes d'implémentation.
+
+Certaines map ou collections font des hypothèses sur les éléments qu'elles contiennent.
+Les hypothèses les plus courantes portent sur :
+
+* l'implémentation des méthodes `hashCode` et `equals`. Celles-ci sont utilisées par les collections et maps qui utilisent un algorithme de hachage.
+* l'implémentation de l'interface `Comparable` ou d'un `Comparator`. Ceux-ci sont utilisés par les collections et maps qui trient leurs éléments.
+
+[NOTE]
+====
+L'implémentation par défaut des méthodes `hashCode` et `equals` se base sur l'adresse mémoire de l'objet.
+Deux instances différentes seront donc toujours différentes, même si leur contenu est unique.
+Le contrat des ces deux méthodes est plus compliqué que vous pourriez le croire.
+Référez-vous à https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html[la Javadoc de la classe `Object`] pour connaître leur spécification.
+Les méthodes statiques `equals(Object valueA, Object valueB)` et `hash(Object... values)` vous aideront à implémenter correctement ces méthodes.
+La plupart des IDE permettent de les générer facilement en sélectionnant les champs de votre classe.
+
+image::e-n-h-generate.png[scaledwidth="20%", float="left"]
+image::e-n-h-template.png[scaledwidth="20%", float="left"]
+image::e-n-h-fields.png[scaledwidth="20%", float="left"]
+
+[source,java]
+----
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Person person = (Person) o;
+    return Objects.equals(firstName, person.firstName) &&
+        Objects.equals(lastName, person.lastName);
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(firstName, lastName);
+}
+----
+
+====
+
+WARNING: Il est dangereux de baser les méthodes `equals` et `hashCode` de la même classe sur des champs différents.
+Les classes du framework collections font l'hypothèse que ces méthodes se comportent de manière consistante.
+Cette remarque vaut aussi si vous implémentez l'une de ces méthodes mais pas l'autre.
+
+.Méthodes et interfaces utilisées dans le framework
 image::object-and-comparison.svg[scaledwidth="60%", align="center"]
 
-Une collection est une structure de données qui peut être n'importe quel ensemble d'éléments de même type.
-Le programmeur n'est pas limité aux seules collections proposées par Java et peut définir lui-même ses propres collections ou étendre des collections existantes.
-
-Les collections implémentent toutes une interface Collection qui présente un ensemble de méthodes (dont certaines sont optionnelles) visant la gestion des collections (e.g. conversion en tableau, taille, récupération d'objets, etc.).
-
-D'autres sous-interfaces étendent l'interface Collection:
-
-* List : permet la gestion de collections pouvant contenir des doublons ; les classes implémentant cette interface sont :
-** ArrayList (liste de tableaux);
-** LinkedList (liste chaînée);
-* Set : permet la gestion de collections ne pouvant contenir aucun doublon ; les classes implémentant cette interface sont:
-** HashSet (table de découpage);
-** TreeSet (arbre).
-
-NOTE: les collections se situent dans le package java.util.
-Le type de données que l'on souhaite placer dans la structure est défini lors de la création de cette dernière.
-Par exemple, pour une liste de String, la création se fera par exemple comme suit:
-List<String> liste = new LinkedList<String>();
-Un autre type de structure de données utilisable en Java est le Map. Ce dernier classe les éléments par paire clé/valeur.
-Deux enregistrements d'une même structure Map ne pourront jamais avoir la même clé.
-On retrouve principalement deux classes qui implémentent l'interface Map : HashMap et TreeMap.
-
-NOTE: l'utilisation de la documentation en ligne permettra d'obtenir plus d'information sur l'utilisation de ces structures de données (http://java.sun.com/j2se/1.5.0/docs/api/).
-Toutes les classes implémentant l'interface Collection peuvent être parcourue de la manière suivante:
-for(String s : liste) {...}
-
-=== Les itérateurs
+=== Itérations
 
 En plus de l'interface Collection, les classes List et Set étendent l'interface Iterable définissant une méthode iterator.
 Cette dernière devra retourner un objet implémentant l'interface Iterator.

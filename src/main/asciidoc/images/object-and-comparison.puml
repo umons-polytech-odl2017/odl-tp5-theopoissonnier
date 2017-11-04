@@ -1,20 +1,35 @@
 @startuml
 
-class Object {
-    +hashCode() : int
-    +equals(other : Object) : boolean
+package java.lang {
+    class Object {
+        +hashCode() : int
+        +equals(other : Object) : boolean
+    }
+
+    interface Comparable<T> {
+        +compareTo(other : T) : int
+    }
 }
 
-interface Comparable<T> {
-    +compareTo(other : T) : int
+package java.util {
+    class Collections
+    interface Iterator<E> {
+        +hasNext() : boolean
+        +next() : E
+        +remove() : void
+    }
+
+    interface Comparator<T> {
+        +compare(x : T, y : T) : int
+    }
 }
 
-interface Comparator<T> {
-    +compare(x : T, y : T) : int
-}
+note bottom of Collections : Méthodes statiques\nqui opèrent sur ou retournent\ndes collections
+
 
 note "[x == y] : 0\n[x < y] : < 0\n[x > y] : > 0" as n1
-Comparable .. n1
+n1 .. Comparable
 Comparator .. n1
 
+Iterator -[hidden]-- Object
 @enduml
