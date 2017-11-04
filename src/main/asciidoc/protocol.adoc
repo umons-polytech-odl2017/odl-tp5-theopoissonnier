@@ -57,6 +57,9 @@ Référez-vous à https://docs.oracle.com/javase/8/docs/api/java/lang/Object.htm
 Les méthodes statiques `equals(Object valueA, Object valueB)` et `hash(Object... values)` vous aideront à implémenter correctement ces méthodes.
 La plupart des IDE permettent de les générer facilement en sélectionnant les champs de votre classe.
 
+.Méthodes et interfaces utilisées dans le framework
+image::object-and-comparison.svg[scaledwidth="60%", align="center"]
+
 [source,java]
 .Example d'implémentation des méthodes `equals` et `hashCode`
 ----
@@ -81,52 +84,92 @@ WARNING: Il est dangereux de baser les méthodes `equals` et `hashCode` de la m�
 Les classes du framework collections font l'hypothèse que ces méthodes se comportent de manière consistante.
 Cette remarque vaut aussi si vous implémentez l'une de ces méthodes mais pas l'autre.
 
-.Méthodes et interfaces utilisées dans le framework
-image::object-and-comparison.svg[scaledwidth="60%", align="center"]
+=== Paramètre générique
 
-=== Itérations
+Les classes et interfaces du framework collections sont prévues pour contenir n'importe quel objet.
+Afin de garder une certaine facilité d'utilisation, celles-ci utilisent des paramètres génériques.
+Sur les figures <<collection-hierarchy>> et <<map-hierarchy>>, vous pouvez observer le paramètre `E` pour la hiérarchie de `Collection` et `K` et `V` pour la hiérarchie de `Map`.
+Ils désignent respectivement le type des éléments de la collection et les types de la clé et de la valeur du dictionnaire.
 
-En plus de l'interface Collection, les classes List et Set étendent l'interface Iterable définissant une méthode iterator.
-Cette dernière devra retourner un objet implémentant l'interface Iterator.
-Cette interface présente les méthodes hasNext, next et remove qui permettent de se déplacer au sein de la structure de données.
-Des sous-interfaces de Iterator (e.g. ListIterator) permettent d'ajouter des fonctionnalités suivant le type de structure de données.
-Par exemple, le parcours d'une liste nommée liste1 peut se faire de la manière suivante :
-ListIterator it = liste1.listIterator();
-while(it.hasNext())
-{
-Object obj = it.next();
+Lors de l'initialisation d'une collection ou d'une map, il n'est pas nécessaire de répéter les paramètres génériques de la déclaration.
+On se content alors d'écrire `<>`, aussi appelé _diamond operator_.
+
+[source,java]
+.Example d'utilisation d'un paramètre générique.
+----
+Map<String, Student> studentsByName = new HashMap<>(); // <1>
+studentsByName.put("Bridges", new Student("Lisandra", "Bridges"); // <2>
+studentsByName.put("Zimmerman", new Student("Sawyer", "Zimmerman");
+...
+Student wilcoxStudent = studentsByName.get("Wilcox"); // <3>
+----
+<1> Une map est déclarée. Ses clés sont de type `String`. Ses valeurs de type `Student`.
+<2> Le compilateur refusera de compiler ce code si vous essayer d'appeler la méthode `put` avec les mauvais types d'arguments.
+<3> La méthode `get` retourne une valeur de type `Student`.
+
+Cette introduction devrait être suffisante pour réaliser les exercices du TP.
+Si vous souhaitez en savoir plus, vous pouvez consulter https://docs.oracle.com/javase/tutorial/java/generics/index.html[le tutorial d'Oracle sur le sujet].
+
+=== Utilisation des collections
+
+Il existe plusieurs manières d'itérer une collection.
+
+[source,java]
+.Itération d'une collection à l'aide d'un itérateur
+----
+Collection<Element> elements = ...
+for (Iterator<Element> elementIterator = elements.iterator(); elementIterator.hasNext(); ) {
+    ...
 }
+----
 
-NOTE: les Maps n'implémentant pas l'interface Iterable, ils ne permettent pas d'être parcourus à l'aide d'un itérateur.
-Toutefois, il sera possible de le faire en convertissant chaque Map, à l'aide de la méthode values, en une Collection équivalente (qui, elle, implémente l'interface Iterable).
+[source,java]
+.Itération d'une collection à l'aide d'une boucle foreach
+----
+Collection<Element> elements = ...
+for (Element element: elements) {
+    ...
+}
+----
 
-=== Les méthodes de la classe Collections
+[source,java]
+.Iteration d'une collection à l'aide de l'interface `Stream` et d'une lambda expression
+----
+Collection<Element> elements = ...
+elements.stream().forEach(element -> ...)
+----
 
-La classe Collections définit des méthodes statiques qui seront utilisées pour réaliser différents traitements sur les collections.
-Certaines de ces méthodes ne s'appliquent que sur des listes ; c'est le cas de:
+La première version permet un accès à l'itérateur alors que la seconde utilise un itérateur implicite.
+La troisième version utilise les lambda expressions qui sont disponibles depuis Java 8.
+L'interface `Stream` offre bien plus que la simple possibilité d'appliquer une fonction à tous les éléments d'une collection.
 
-* sort : trie les éléments de la liste dans l'ordre naturel ; il est possible de spécifier un objet Comparator permettant « d'expliquer » à sort comment trier des éléments;
-* shuffle : ordonne de manière aléatoire les éléments de la liste;
-* reverse : inverse l'ordre des éléments de la liste;
-* fill : réinitalise la liste avec une valeur définie;
-* copy : copie une liste dans une autre.
+[source,java]
+.Exemple de filtrage et de conversion d'une collection
+----
+Collection<Person> people = ...
+Collection<String> maleFirstnames = people.stream()
+        .filter(person -> person.getGender().equalsTo(Gender.MALE)) // <1>
+        .map(Person::getFirstname) // <2>
+        .sorted() // <3>
+        .distinct() // <4>
+        .collect(Collectors.toList()); // <5>
+----
+<1> Ne garde que les personnes de sexe masculin.
+<2> Transforme le `Stream<Person>` en `Stream<String>` contenant le prénom. Le paramètre est une référence de méthode.
+<3> Trie les prénoms par ordre alphabétique.
+<4> Supprime les doublons.
+<5> Transforme le `Stream<String>` en `Collection<String>`.
 
-Remarquons que le tri d'éléments est naturel pour des valeurs numériques mais ne l'est pas forcément pour des objets plus complexes.
-En effet, la fonction de tri doit savoir comment comparer deux objets en vue de les classer.
-Dans ce but, on souhaitera implémenter l'interface Comparable<T> définissant une méthode compareTo.
-Cette dernière retournera 1, 0 ou 1 suivant que l'argument passé à la méthode compareTo est « plus petit », « équivalent » ou « plus grand », au sens de l'ordonnancement que l'on souhaite introduire.
+[source,java]
+.Exemple de calcul de l'age moyen d'une population
+----
+double averageAge = people.stream()
+        .mapToInt(Person::getAge)
+        .average()
+        .orElse(0.0);
+----
 
-=== Généricité
-
-Il est parfois nécessaire de gérer des classes ou des méthodes pour lesquelles on ne connaît pas à l'avance le type traité.
-On peut alors spécifier un type indéfini dans la déclaration de la classe, comme dans l'exemple suivant:
-public class Pile<E>
-Le type E peut ensuite être utilisé au sein de la classe qui est appelée classe générique.
-
-Il est également possible de définir des méthodes génériques; on peut alors soit utiliser le caractère ? ou faire précéder le type de retour de la méthode par le type générique:
-public static void method(? el) public static <E> void method(E el)
-On peut également obliger le type E à être une sousclasse d'une classe déterminée ou à implémenter une interface déterminée:
-public static <E extends Pile> void method(E el)
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html[La Javadoc du package `java.util.stream`] (en bas de la page) et des classes de ce package vous fourniront plus d'informations.
 
 == Exercices
 
