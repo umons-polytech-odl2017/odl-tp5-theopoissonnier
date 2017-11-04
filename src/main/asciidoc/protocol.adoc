@@ -57,11 +57,8 @@ Référez-vous à https://docs.oracle.com/javase/8/docs/api/java/lang/Object.htm
 Les méthodes statiques `equals(Object valueA, Object valueB)` et `hash(Object... values)` vous aideront à implémenter correctement ces méthodes.
 La plupart des IDE permettent de les générer facilement en sélectionnant les champs de votre classe.
 
-image::e-n-h-generate.png[scaledwidth="20%", float="left"]
-image::e-n-h-template.png[scaledwidth="20%", float="left"]
-image::e-n-h-fields.png[scaledwidth="20%", float="left"]
-
 [source,java]
+.Example d'implémentation des méthodes `equals` et `hashCode`
 ----
 @Override
 public boolean equals(Object o) {
