@@ -1,0 +1,7 @@
+= ODL - TP5 - Collections
+François Roland <francois.roland@umons.ac.be>
+2017-11-04
+
+During this lab, we'll explore the main data structures provided by the standard Java library.
+
+The protocol is available https://moodle.umons.ac.be/mod/resource/view.php?id=12554[on Moodle].
