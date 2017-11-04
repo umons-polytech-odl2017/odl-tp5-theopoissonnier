@@ -1,4 +1,4 @@
-= Programmation en Java : exceptions et fichiers
+= Programmation en Java : collections
 François Roland <francois.roland@umons.ac.be>
 2017-10-31
 :icons: font
@@ -15,16 +15,138 @@ ifdef::backend-pdf[]
 endif::[]
 
 
+Lors de cette séance de TP, nous verrons l'utilisation des collections Java permettant de gérer
+efficacement un ensemble de données groupées.
+
 == Notions
 
+=== Les collections
+
+Une collection est une structure de données qui peut être n'importe quel ensemble d'éléments de même type.
+Le programmeur n'est pas limité aux seules collections proposées par Java et peut définir lui-même ses propres collections ou étendre des collections existantes.
+
+Les collections implémentent toutes une interface Collection qui présente un ensemble de méthodes (dont certaines sont optionnelles) visant la gestion des collections (e.g. conversion en tableau, taille, récupération d'objets, etc.).
+
+D'autres sous-interfaces étendent l'interface Collection:
+
+* List : permet la gestion de collections pouvant contenir des doublons ; les classes implémentant cette interface sont :
+** ArrayList (liste de tableaux);
+** LinkedList (liste chaînée);
+* Set : permet la gestion de collections ne pouvant contenir aucun doublon ; les classes implémentant cette interface sont:
+** HashSet (table de découpage);
+** TreeSet (arbre).
+
+NOTE: les collections se situent dans le package java.util.
+Le type de données que l'on souhaite placer dans la structure est défini lors de la création de cette dernière.
+Par exemple, pour une liste de String, la création se fera par exemple comme suit:
+List<String> liste = new LinkedList<String>();
+Un autre type de structure de données utilisable en Java est le Map. Ce dernier classe les éléments par paire clé/valeur.
+Deux enregistrements d'une même structure Map ne pourront jamais avoir la même clé.
+On retrouve principalement deux classes qui implémentent l'interface Map : HashMap et TreeMap.
+
+NOTE: l'utilisation de la documentation en ligne permettra d'obtenir plus d'information sur l'utilisation de ces structures de données (http://java.sun.com/j2se/1.5.0/docs/api/).
+Toutes les classes implémentant l'interface Collection peuvent être parcourue de la manière suivante:
+for(String s : liste) {...}
+
+=== Les itérateurs
+
+En plus de l'interface Collection, les classes List et Set étendent l'interface Iterable définissant une méthode iterator.
+Cette dernière devra retourner un objet implémentant l'interface Iterator.
+Cette interface présente les méthodes hasNext, next et remove qui permettent de se déplacer au sein de la structure de données.
+Des sous-interfaces de Iterator (e.g. ListIterator) permettent d'ajouter des fonctionnalités suivant le type de structure de données.
+Par exemple, le parcours d'une liste nommée liste1 peut se faire de la manière suivante :
+ListIterator it = liste1.listIterator();
+while(it.hasNext())
+{
+Object obj = it.next();
+}
+
+NOTE: les Maps n'implémentant pas l'interface Iterable, ils ne permettent pas d'être parcourus à l'aide d'un itérateur.
+Toutefois, il sera possible de le faire en convertissant chaque Map, à l'aide de la méthode values, en une Collection équivalente (qui, elle, implémente l'interface Iterable).
+
+=== Les méthodes de la classe Collections
+
+La classe Collections définit des méthodes statiques qui seront utilisées pour réaliser différents traitements sur les collections.
+Certaines de ces méthodes ne s'appliquent que sur des listes ; c'est le cas de:
+
+* sort : trie les éléments de la liste dans l'ordre naturel ; il est possible de spécifier un objet Comparator permettant « d'expliquer » à sort comment trier des éléments;
+* shuffle : ordonne de manière aléatoire les éléments de la liste;
+* reverse : inverse l'ordre des éléments de la liste;
+* fill : réinitalise la liste avec une valeur définie;
+* copy : copie une liste dans une autre.
+
+Remarquons que le tri d'éléments est naturel pour des valeurs numériques mais ne l'est pas forcément pour des objets plus complexes.
+En effet, la fonction de tri doit savoir comment comparer deux objets en vue de les classer.
+Dans ce but, on souhaitera implémenter l'interface Comparable<T> définissant une méthode compareTo.
+Cette dernière retournera 1, 0 ou 1 suivant que l'argument passé à la méthode compareTo est « plus petit », « équivalent » ou « plus grand », au sens de l'ordonnancement que l'on souhaite introduire.
+
+=== Généricité
+
+Il est parfois nécessaire de gérer des classes ou des méthodes pour lesquelles on ne connaît pas à l'avance le type traité.
+On peut alors spécifier un type indéfini dans la déclaration de la classe, comme dans l'exemple suivant:
+public class Pile<E>
+Le type E peut ensuite être utilisé au sein de la classe qui est appelée classe générique.
+
+Il est également possible de définir des méthodes génériques; on peut alors soit utiliser le caractère ? ou faire précéder le type de retour de la méthode par le type générique:
+public static void method(? el) public static <E> void method(E el)
+On peut également obliger le type E à être une sousclasse d'une classe déterminée ou à implémenter une interface déterminée:
+public static <E extends Pile> void method(E el)
 
 == Exercices
 
+=== Exercice 1
+
+On souhaite gérer un ensemble d'étudiants. Chaque étudiant sera défini par une classe Etudiant et devra présenter les informations suivantes:
+
+* un matricule;
+* un nom;
+* une liste de Cotes (de taille indéfinie).
+
+Une classe Cote permettra de contenir pour chaque cours, l'intitulé du cours ainsi que la cote obtenue.
+Les cotes de chaque étudiant seront stockées dans une ArrayList.
+Une méthode addCote permettant d'ajouter une cote à l'étudiant sera définie.
+
+=== Exercice 2
+
+On souhaite mettre en place une classe capable de réaliser des statistiques sur une collection d'objets, comme par exemple, des Etudiants, des Cotes, ...
+Cette classe, qui sera nommée Stats, pourra ainsi calculer le maximum, le minimum et la moyenne d'une collection d'objets.
+Toutes les classes qui peuvent faire l'objet de statistiques implémenteront une interface Statisticable, qui est décrite comme suit :
+public interface Statisticable {
+public abstract float getValue();
+}
+Tout objet « statisticable » doit donc avoir une certaine valeur; pour un Etudiant, on choisit de prendre la moyenne de ses cotes comme valeur de l'Etudiant.
+La classe Stats sera ensuite utilisée et donnera pour :
+
+* chaque étudiant:
+** sa moyenne;
+** sa meilleure cote;
+** sa moins bonne cote;
+* chaque groupe d'étudiants:
+** la moyenne du groupe;
+** le meilleur étudiant;
+** le moins bon étudiant.
+
+=== Exercice 3
+
+On souhaite pouvoir classer la liste d'étudiants suivant le matricule.
+Pour ce faire, on implémentera l'interface Comparable dans la classe Etudiant.
+La méthode compareTo devra donc être définie dans la classe Etudiant.
+
+NOTE: il sera utile de se référer à la documentation en ligne pour implémenter correctement l'interface Comparable.
+Une fois cela réalisé, on triera la liste d'étudiants à l'aide de la méthode Collections.sort.
+
+=== Exercice 4
+
+On souhaite également pouvoir trier la liste d'étudiants par moyenne et par nom.
+Dans ce but, deux nouvelles classes (CompareMoyenne et CompareNom) seront créées et implémenteront l'interface Comparator.
+Ces classes devront donc chacune définir une méthode compare prenant comme arguments les deux objets à comparer et réalisant un traitement similaire à celui de compareTo dans l'exercice précédent.
 
 [bibliography]
 == Références
 
-* Deitel, H. M. & Deitel, P. J. (2002), _JAVA Comment programmer – Quatrième édition_. Les éditions Reynald Goulet INC.
-* Manneback, P. & Frémal, S. (2014-2015) _Travaux pratiques de Méthodologie et Langage de Programmation_. UMons.
-* Manneback, P. (2005-2006) _Méthodologie et Langages de Programmation_. UMons.
+* Deitel, H. M., & Deitel, P. J. (2002). _JAVA Comment programmer (4th ed.)_. Les éditions Reynald Goulet INC.
+* Deitel, P. J., & Deitel, H. M. (2007). _Java: how to program (7th ed.)_. Les éditions Reynald Goulet INC.
+* Evans, E. (2003). _Domain-driven design: tackling complexity in the heart of software (1st ed.)_. Addison-Wesley Professional.
+* Manneback, P., & Frémal, S. (2014-2015). _Travaux pratiques de Méthodologie et Langage de Programmation_. UMons.
+* Manneback, P. (2005-2006). _Méthodologie et Langages de Programmation_. UMons.
 * _Java Platform Standard Edition 8 Documentation_. Récupéré de https://docs.oracle.com/javase/8/docs/
