@@ -175,46 +175,22 @@ https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html[
 
 === Exercice 1
 
-On souhaite gérer un ensemble d'étudiants. Chaque étudiant sera défini par une classe Etudiant et devra présenter les informations suivantes:
+On souhaite gérer une classe d'étudiants.
+Chaque étudiant reçoit les cotes de plusieurs cours.
+Votre objectif est d'implémenter les classes du diagramme <<exercise1-classes>> et leurs méthodes.
+Vous êtes libres d'en ajouter d'autres et de déplacer l'implémentation tant que les méthodes présentes peuvent être appelées par mes tests unitaires.
 
-* un matricule;
-* un nom;
-* une liste de Cotes (de taille indéfinie).
-
-Une classe Cote permettra de contenir pour chaque cours, l'intitulé du cours ainsi que la cote obtenue.
-Les cotes de chaque étudiant seront stockées dans une ArrayList.
-Une méthode addCote permettant d'ajouter une cote à l'étudiant sera définie.
+[[exercise1-classes]]
+.Classes de l'exercice 1
+image::student-score.svg[scaledwidth="80%", align="center"]
 
 === Exercice 2
 
-On souhaite mettre en place une classe capable de réaliser des statistiques sur une collection d'objets, comme par exemple, des Etudiants, des Cotes, ...
-Cette classe, qui sera nommée Stats, pourra ainsi calculer le maximum, le minimum et la moyenne d'une collection d'objets.
-Toutes les classes qui peuvent faire l'objet de statistiques implémenteront une interface Statisticable, qui est décrite comme suit :
-public interface Statisticable {
-public abstract float getValue();
-}
-Tout objet « statisticable » doit donc avoir une certaine valeur; pour un Etudiant, on choisit de prendre la moyenne de ses cotes comme valeur de l'Etudiant.
-La classe Stats sera ensuite utilisée et donnera pour :
+On souhaite pouvoir classer la liste d'étudiants suivant le matricule.
+Pour ce faire, implémentez l'interface `Comparable` dans la classe `Student`.
 
-* chaque étudiant:
-** sa moyenne;
-** sa meilleure cote;
-** sa moins bonne cote;
-* chaque groupe d'étudiants:
-** la moyenne du groupe;
-** le meilleur étudiant;
-** le moins bon étudiant.
 
 === Exercice 3
-
-On souhaite pouvoir classer la liste d'étudiants suivant le matricule.
-Pour ce faire, on implémentera l'interface Comparable dans la classe Etudiant.
-La méthode compareTo devra donc être définie dans la classe Etudiant.
-
-NOTE: il sera utile de se référer à la documentation en ligne pour implémenter correctement l'interface Comparable.
-Une fois cela réalisé, on triera la liste d'étudiants à l'aide de la méthode Collections.sort.
-
-=== Exercice 4
 
 On souhaite également pouvoir trier la liste d'étudiants par moyenne et par nom.
 Dans ce but, deux nouvelles classes (CompareMoyenne et CompareNom) seront créées et implémenteront l'interface Comparator.

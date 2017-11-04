@@ -1,0 +1,24 @@
+@startuml
+
+interface Scoreable {
+    {abstract} +averageScore() : double
+    {abstract} +minScore() : int
+    {abstract} +maxScore() : int
+    {abstract} +countStudents() : int
+}
+
+class Classroom {
+    +addStudent(student : Student) : void
+}
+
+class Student {
+    -name : String
+    -registrationNumber : String
+    -scoresByCourse : Map<String, Integer>
+    +addScore(course : String, score : int) : void
+}
+
+Scoreable <|-- Classroom
+Scoreable <|-- Student
+Classroom o-> Student
+@enduml
