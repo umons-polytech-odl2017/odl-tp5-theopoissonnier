@@ -14,13 +14,24 @@ ifdef::backend-pdf[]
 = {doctitle}
 endif::[]
 
-
-Lors de cette séance de TP, nous verrons l'utilisation des collections Java permettant de gérer
-efficacement un ensemble de données groupées.
+Lors de cette séance de TP, nous verrons l'utilisation des collections Java permettant de gérer un ensemble de données.
 
 == Notions
 
-=== Les collections
+=== Structure de données
+
+Le package `java.util` nous fournit deux hiérarchies particulièrement importantes pour la programmation.
+La première permet de grouper des éléments relativement homogènes.
+La seconde permet de créer des dictionnaires, c'est-à-dire un ensemble de valeurs auxquelles nous accédons à partir d'une clé.
+
+.Interfaces et classes principales de la hiérarchie de `Collection`
+image::collection-hierarchy.svg[scaledwidth="90%", align="center"]
+
+.Interfaces et classes principales de la hiérarchie de `Map`
+image::map-hierarchy.svg[scaledwidth="80%", align="center"]
+
+.Méthodes et interfaces utilisées par `Collection` et `Map`
+image::object-and-comparison.svg[scaledwidth="60%", align="center"]
 
 Une collection est une structure de données qui peut être n'importe quel ensemble d'éléments de même type.
 Le programmeur n'est pas limité aux seules collections proposées par Java et peut définir lui-même ses propres collections ou étendre des collections existantes.
