@@ -171,6 +171,13 @@ double averageAge = people.stream()
 
 https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html[La Javadoc du package `java.util.stream`] (en bas de la page) et des classes de ce package vous fourniront plus d'informations.
 
+=== Optional
+
+La https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html[classe `java.util.Optional`] est un conteneur de données particulier.
+Cette classe peut-être considérée comme une collection qui peut soit être vide, soit contenir un élément unique non-null.
+Elle est souvent utilisée comme valeur de retour d'une méthode pour signifier à son utilisateur qu'il n'est pas toujours possible de retourner une valeur.
+On la retrouve notamment dans l'API de `java.util.Stream`.
+
 == Exercices
 
 === Exercice 1
