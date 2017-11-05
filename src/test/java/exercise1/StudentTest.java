@@ -153,8 +153,8 @@ public class StudentTest {
 
     @Test
     public void getRegistrationNumber() {
-        Student odor = new Student("Odor", "000321");
-        assertThat(odor.getRegistrationNumber()).isEqualTo("000321");
+        Student hodor = new Student("Hodor", "000321");
+        assertThat(hodor.getRegistrationNumber()).isEqualTo("000321");
     }
 
     @Test

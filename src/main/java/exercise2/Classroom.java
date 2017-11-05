@@ -1,4 +1,7 @@
-package exercise1;
+package exercise2;
+
+import exercise1.DuplicateStudentException;
+import exercise1.Student;
 
 import java.util.List;
 
