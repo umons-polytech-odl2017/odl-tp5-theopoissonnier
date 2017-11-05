@@ -1,6 +1,6 @@
 package exercise1;
 
-public class Classroom implements Scoreable {
+public class Classroom {
     public void addStudent(Student student) {
 
     }
