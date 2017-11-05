@@ -179,6 +179,9 @@ On souhaite gérer une classe d'étudiants.
 Chaque étudiant reçoit les cotes de plusieurs cours.
 Votre objectif est d'implémenter les classes du diagramme <<exercise1-classes>> et leurs méthodes.
 Vous êtes libres d'en ajouter d'autres et de déplacer l'implémentation tant que les méthodes présentes peuvent être appelées par mes tests unitaires.
+Le comportement de certaines méthodes est décrit dans la Javadoc du code fourni.
+Veillez à ce que votre implémentation soit en accord avec ces contraintes.
+Vous trouverez des tests unitaires dans `src/test/java/exercise1` pour vous aider à évaluer votre progression.
 
 [[exercise1-classes]]
 .Classes de l'exercice 1

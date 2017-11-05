@@ -61,28 +61,10 @@ public class Student {
     /**
      * Returns the highest score.
      *
-     * @return the highest score or <code>OptionalInt#empty()</code> if there is none.
+     * @return the highest score or 0 if there is none.
      */
-    public OptionalInt bestScore() {
-        return OptionalInt.empty();
-    }
-
-    /**
-     * Returns the course with the lowest score.
-     *
-     * @return the worst scored course or <code>Optional#empty()</code> if there is none.
-     */
-    public Optional<String> worstCourse() {
-        return null;
-    }
-
-    /**
-     * Returns the lowest score.
-     *
-     * @return the lowest score or <code>OptionalInt#empty()</code> if there is none.
-     */
-    public OptionalInt worstScore() {
-        return null;
+    public int bestScore() {
+        return 0;
     }
 
     /**

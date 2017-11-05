@@ -3,6 +3,8 @@
 class Classroom {
     +addStudent(student : Student) : void
     +countStudents() : int
+    +topScorers(course : String, n : int) : List<Student>
+    +successfulStudents() : List<Student>
 }
 
 class Student {
@@ -11,9 +13,7 @@ class Student {
     +getScore(course : String) : OptionalInt
     +averageScore() : OptionalDouble
     +bestCourse() : Optional<String>
-    +bestScore() : OptionalInt
-    +worstCourse() : Optional<String>
-    +worstScore() : OptionalInt
+    +bestScore() : int
     +failedCourses() : Set<String>
     +isSuccessful() : boolean
     +attendedCourses() : Set<String>
