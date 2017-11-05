@@ -118,7 +118,7 @@ Il existe plusieurs manières d'itérer une collection.
 .Itération d'une collection à l'aide d'un itérateur
 ----
 Collection<Element> elements = ...
-for (Iterator<Element> elementIterator = elements.iterator(); elementIterator.hasNext(); ) {
+for (Iterator<Element> elementIt = elements.iterator(); elementIt.hasNext(); ) {
     ...
 }
 ----
@@ -191,6 +191,7 @@ image::student-score.svg[scaledwidth="80%", align="center"]
 
 Implémentez maintenant la classe `Classroom`.
 Les consignes sont les mêmes que pour l'exercice 1.
+Vous trouverez des tests unitaires dans `src/test/java/exercise2` pour vous aider à évaluer votre progression.
 
 [bibliography]
 == Références
