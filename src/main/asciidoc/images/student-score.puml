@@ -9,14 +9,16 @@ class Student {
     +Student(name : String, registrationNumber : String)
     +setScore(course : String, score : int) : void
     +getScore(course : String) : OptionalInt
-    +averageScore() : double
-    +bestCourse() : String
-    +bestScore() : int
-    +worstCourse() : String
-    +worstScore() : int
+    +averageScore() : OptionalDouble
+    +bestCourse() : Optional<String>
+    +bestScore() : OptionalInt
+    +worstCourse() : Optional<String>
+    +worstScore() : OptionalInt
     +failedCourses() : Set<String>
     +isSuccessful() : boolean
     +attendedCourses() : Set<String>
+    +getName() : String
+    +getRegistrationNumber() : String
 }
 
 Classroom o-> Student

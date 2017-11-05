@@ -109,7 +109,14 @@ public class Student {
         return null;
     }
 
-    public String registrationNumber() {
+    public String getRegistrationNumber() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder(getName());
+        sb.append(" (").append(getRegistrationNumber()).append(")");
+        return sb.toString();
     }
 }

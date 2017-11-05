@@ -1,4 +1,6 @@
-package exercise1;
+package exercise2;
+
+import exercise1.Student;
 
 public class Classroom {
     public void addStudent(Student student) {
