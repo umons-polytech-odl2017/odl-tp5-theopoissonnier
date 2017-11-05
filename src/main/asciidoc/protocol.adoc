@@ -192,12 +192,6 @@ image::student-score.svg[scaledwidth="80%", align="center"]
 Implémentez maintenant la classe `Classroom`.
 Les consignes sont les mêmes que pour l'exercice 1.
 
-=== Exercice 3
-
-On souhaite également pouvoir trier la liste d'étudiants par moyenne et par nom.
-Dans ce but, deux nouvelles classes (CompareMoyenne et CompareNom) seront créées et implémenteront l'interface Comparator.
-Ces classes devront donc chacune définir une méthode compare prenant comme arguments les deux objets à comparer et réalisant un traitement similaire à celui de compareTo dans l'exercice précédent.
-
 [bibliography]
 == Références
 
