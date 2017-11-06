@@ -1,14 +1,13 @@
 package exercise1;
 
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.Set;
+import java.util.*;
 
+import static java.util.Objects.requireNonNull;
 /**
  * Represents a student.
  * A Student is identified by its registration number.
  * A student gets scored in different courses.
- * These scores are expressed as integers on a scale from 0 to 20.
+ * These scores are expressed as integers on a scale from 0 t = people.stream()o 20.
  */
 public class Student {
     /**
@@ -16,19 +15,39 @@ public class Student {
      *
      * @throws NullPointerException if one of the parameter is null.
      */
-    public Student(String name, String registrationNumber) {
+    private String name;
+    private String registrationNumber;
+    private String course;
+    private int score;
+    private HashMap<String, Integer> courses;
 
+
+
+    public Student(String name, String registrationNumber) {
+        this.name = requireNonNull(name, "name may not be null");
+        this.registrationNumber = requireNonNull(registrationNumber, "registrationNumber may not be null");
     }
 
     /**
      * Sets the score of this student for the given course.
      * If the score is set twice for the same course, the new score replaces the previous one.
      *
-     * @throws NullPointerException if the course name is null.
+     * @throws Nudouble averageAge = people.stream()
+
+.mapToInt(Person::getAge)
+
+.average()
+
+.orElse(0.0);llPointerException if the course name is null.
      * @throws IllegalArgumentException if the score is less than 0 or greater than 20.
      */
     public void setScore(String course, int score) {
-
+        if (course != null && score <=20 && score >=0) {
+            courses.put(course, score);
+        }
+        requireNonNull(course, "course may not be null");
+        if (score < 0 || score > 20)
+            throw new IllegalArgumentException("score must be between 0 and 20");
     }
 
     /**
@@ -37,6 +56,7 @@ public class Student {
      * @return the score if found, <code>OptionalInt#empty()</code> otherwise.
      */
     public OptionalInt getScore(String course) {
+
         return null;
     }
 
@@ -46,6 +66,7 @@ public class Student {
      * @return the average score or 0 if there is none.
      */
     public double averageScore() {
+
         return 0;
     }
 
@@ -88,11 +109,11 @@ public class Student {
     public Set<String> attendedCourses() { return null; }
 
     public String getName() {
-        return null;
+        return name;
     }
 
     public String getRegistrationNumber() {
-        return null;
+        return registrationNumber;
     }
 
     @Override
